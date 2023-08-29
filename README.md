@@ -4,7 +4,7 @@ This is your resource for quickly exploring and learning about the interesting w
 
 Each directory houses a self contained example with a README and a runnable program.
 
-It helps if you have already set up `dpm` and created a free account on DPM cloud to publish your packages. <link>
+While most of the programs are runnable out of the box, you will be able to do more if you have already set up `dpm`.  <link>
 
 
 ## Gallery Index
