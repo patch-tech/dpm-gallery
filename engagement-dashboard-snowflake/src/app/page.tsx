@@ -66,8 +66,6 @@ export default async function Home() {
     .execute()
   ]));
 
-  console.log(sessionData);
-
   return (
     <main className="p-12">
       <Title>Data Packages on Snowflake</Title>
