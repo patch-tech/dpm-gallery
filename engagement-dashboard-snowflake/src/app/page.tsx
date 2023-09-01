@@ -86,7 +86,7 @@ export default async function Home() {
                 className="mt-6"
                 data={genderData}
                 category="genderCount"
-                index="GENDER"
+                index="gender"
                 colors={["rose", "violet"]}
               />
             </Card>
@@ -97,7 +97,7 @@ export default async function Home() {
                 className="mt-6"
                 data={ageData}
                 category="ageCount"
-                index="AGE"
+                index="age"
                 colors={["rose", "violet", "slate", "indigo", "cyan", "amber"]}
               />
             </Card>
@@ -108,7 +108,7 @@ export default async function Home() {
                 className="mt-6"
                 data={ethnicityData}
                 category="ethnicityCount"
-                index="ETHNICITY"
+                index="ethnicity"
                 colors={["rose", "violet", "slate", "indigo", "cyan", "amber"]}
               />
             </Card>
@@ -143,8 +143,6 @@ export default async function Home() {
               </Card>
             </Col>
           </Grid>
-
-
 
         </TabPanels>
       </TabGroup>
