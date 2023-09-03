@@ -19,8 +19,8 @@ import {
   TableBody,
 } from "@tremor/react";
 
-import { FactsAppEngagement as DataPkg } from "app-engagement";
-import { FactsAppEngagement as DataPkgFast } from "snowflake-demo-package-fast";
+import { FactsAppEngagement as DataPkgDirectSnowflake } from "app-engagement";
+import { FactsAppEngagement as DataPkgAccelerated } from "snowflake-demo-package-fast";
 
 const queries = (pkg: any) => ({
   genderSplit: pkg.select(
@@ -43,7 +43,7 @@ const queries = (pkg: any) => ({
 
 export default async function Home() {
 
-  const activePkg = DataPkgFast;
+  const activePkg = DataPkgAccelerated;
 
   const [
     genderData,
