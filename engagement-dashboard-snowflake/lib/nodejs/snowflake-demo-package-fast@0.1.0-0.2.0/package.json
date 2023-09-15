@@ -1,0 +1,21 @@
+{
+  "name": "snowflake-demo-package-fast",
+  "version": "0.1.0-0.2.0",
+  "description": "This demo package allows you to query mobile app engagement data.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "prepublish": "tsc",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4",
+    "@types/node": "^18.16.1"
+  },
+  "dependencies": {
+    "@grpc/proto-loader": "^0.5.0",
+    "graphql-request": "^6.0.0",
+    "google-protobuf": "^3.0.0",
+    "@grpc/grpc-js": "^1.1.0"
+  }
+}
