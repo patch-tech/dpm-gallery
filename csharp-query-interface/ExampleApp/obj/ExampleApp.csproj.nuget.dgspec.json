@@ -14,12 +14,14 @@
         "outputPath": "/Users/txbm/code/dpm-gallery/csharp-query-interface/ExampleApp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+          "/Users/txbm/code/dpm-gallery/csharp-query-interface/ExampleApp/NuGet.Config",
           "/Users/txbm/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "/Users/txbm/code/dpm-gallery/csharp-query-interface/dist/csharp/AppEngagement@0.1.0-0.1.0/AppEngagement/bin/Debug/": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -37,6 +39,12 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "AppEngagement": {
+              "target": "Package",
+              "version": "[0.1.0-0.1.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

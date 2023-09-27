@@ -37,7 +37,13 @@ const queries = (pkg: any) => ({
     pkg.fields.devicemakemodel,
     pkg.fields.appTitle,
     pkg.fields.foregroundduration)
-   .orderBy([pkg.fields.foregroundduration, 'DESC'])
+   .orderBy([pkg.fields.foregroundduration, 'DESC']),
+  popSummary: pkg.select(
+    pkg.fields.ethnicity,
+    pkg.fields.age,
+    pkg.fields.gender,
+    pkg.fields.panelistid
+  ).limit(50)
 });
 
 export default async function Home() {
@@ -48,7 +54,8 @@ export default async function Home() {
     genderData,
     ageData,
     ethnicityData,
-    sessionData
+    sessionData,
+    popData
   ] = await (Promise.all([
     queries(activePkg)
     .genderSplit
@@ -62,13 +69,16 @@ export default async function Home() {
     queries(activePkg)
     .topSessions
     .limit(50)
+    .execute(),
+    queries(activePkg)
+    .popSummary
     .execute()
   ]));
 
   return (
     <main className="p-12">
-      <Title>Data Packages on Snowflake</Title>
-      <Text>Uses Data Packages to embed Snowflake data in a React App. Tremor charts for visualization.</Text>
+      <Title>County Demographic Summary</Title>
+      <Text>High Level Demographic Summary for All Counties</Text>
 
       <TabGroup className="mt-6">
         <TabList>
@@ -114,7 +124,7 @@ export default async function Home() {
 
             <Col numColSpan={3}>
               <Card>
-                <Title>Top Sessions By Duration</Title>
+                <Title>Population Sample</Title>
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -125,14 +135,14 @@ export default async function Home() {
                   </TableHead>
 
                   <TableBody>
-                    {sessionData.map((row: any) => (
-                      <TableRow key={row.foregroundduration}>
-                        <TableCell>{row.foregroundduration}</TableCell>
+                    {popData.map((row: any) => (
+                      <TableRow key={row.panelistid}>
+                        <TableCell>{row.panelistid}</TableCell>
                         <TableCell>
-                          <Text>{row.appTitle}</Text>
+                          <Text>{row.ethnicity}</Text>
                         </TableCell>
                         <TableCell>
-                          <Text>{row.devicemakemodel}</Text>
+                          <Text>{row.age}</Text>
                         </TableCell>
                       </TableRow>
                     ))}

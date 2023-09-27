@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "URK6q1mTD2jB45rgMNvUTHkD2dDfau8Rjuj0YD0N/WJAaiIDLvAvKT4eC2559kdT14jiB4aswpxvBXD3hCjmmQ==",
+  "dgSpecHash": "D0sOeekjbWDm2KsUyAActHYcujjjZznp5neC4VYLpv1/kUfrIi/qI2hQUKKWdJqcb+VT6muwj9yPTaKmGp0uYQ==",
   "success": true,
   "projectFilePath": "/Users/txbm/code/dpm-gallery/csharp-query-interface/ExampleApp/ExampleApp.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/txbm/.nuget/packages/appengagement/0.1.0-0.1.0/appengagement.0.1.0-0.1.0.nupkg.sha512",
+    "/Users/txbm/.nuget/packages/google.protobuf/3.24.1/google.protobuf.3.24.1.nupkg.sha512",
+    "/Users/txbm/.nuget/packages/grpc.core.api/2.56.0-pre2/grpc.core.api.2.56.0-pre2.nupkg.sha512",
+    "/Users/txbm/.nuget/packages/grpc.net.client/2.56.0-pre2/grpc.net.client.2.56.0-pre2.nupkg.sha512",
+    "/Users/txbm/.nuget/packages/grpc.net.common/2.56.0-pre2/grpc.net.common.2.56.0-pre2.nupkg.sha512",
+    "/Users/txbm/.nuget/packages/microsoft.extensions.logging.abstractions/3.0.3/microsoft.extensions.logging.abstractions.3.0.3.nupkg.sha512",
+    "/Users/txbm/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }
