@@ -1,50 +1,40 @@
 import {
-  Col,
-  Card,
-  Grid,
-  Title,
-  Text,
-  BarChart,
-  DonutChart,
-  Tab,
-  TabList,
-  TabGroup,
-  TabPanel,
-  TabPanels,
-  Table,
-  TableHead,
-  TableHeaderCell,
-  TableRow,
-  TableCell,
-  TableBody,
+  Col, Card,Grid, Title, Text, BarChart, DonutChart, Tab, TabList,
+  TabGroup, TabPanel, TabPanels, Table, TableHead, TableHeaderCell, TableRow, TableCell,TableBody,
 } from "@tremor/react";
 
 import { FactsAppEngagement as DataPkg } from "snowflake-demo-package-fast";
 
-const queries = (pkg: any) => ({
-  genderSplit: pkg.select(
-    pkg.fields.gender,
-    pkg.fields.gender.count().as('genderCount'))
-    .filter(pkg.fields.gender.isNotNull()),
-  ageSplit: pkg.select(
-    pkg.fields.age,
-    pkg.fields.age.count().as('ageCount'))
-    .filter(pkg.fields.age.isNotNull()),
-  ethnicitySplit: pkg.select(
-    pkg.fields.ethnicity,
-    pkg.fields.ethnicity.count().as('ethnicityCount')),
-  topSessions: pkg.select(
-    pkg.fields.devicemakemodel,
-    pkg.fields.appTitle,
-    pkg.fields.foregroundduration)
-   .orderBy([pkg.fields.foregroundduration, 'DESC']),
-  popSummary: pkg.select(
-    pkg.fields.ethnicity,
-    pkg.fields.age,
-    pkg.fields.gender,
-    pkg.fields.panelistid
-  ).limit(50)
-});
+
+const queries = (pkg: any) => {
+
+  const { gender, age, ethnicity, devicemakemodel, appTitle, foregroundduration, panelistid } = pkg.fields;
+
+  return {
+    genderSplit: pkg.select(
+      gender,
+      gender.count().as('genderCount'))
+      .filter(gender.isNotNull()),
+    ageSplit: pkg.select(
+      age,
+      age.count().as('ageCount'))
+      .filter(age.isNotNull()),
+    ethnicitySplit: pkg.select(
+      ethnicity,
+      ethnicity.count().as('ethnicityCount')),
+    topSessions: pkg.select(
+      devicemakemodel,
+      appTitle,
+      foregroundduration)
+    .orderBy([foregroundduration, 'DESC']),
+    popSummary: pkg.select(
+      ethnicity,
+      age,
+      gender,
+      panelistid
+    ).limit(50)
+  };
+};
 
 export default async function Home() {
 
@@ -57,22 +47,11 @@ export default async function Home() {
     sessionData,
     popData
   ] = await (Promise.all([
-    queries(activePkg)
-    .genderSplit
-    .execute(),
-    queries(activePkg)
-    .ageSplit
-    .execute(),
-    queries(activePkg)
-    .ethnicitySplit
-    .execute(),
-    queries(activePkg)
-    .topSessions
-    .limit(50)
-    .execute(),
-    queries(activePkg)
-    .popSummary
-    .execute()
+    queries(activePkg).genderSplit.execute(),
+    queries(activePkg).ageSplit.execute(),
+    queries(activePkg).ethnicitySplit.execute(),
+    queries(activePkg).topSessions.limit(50).execute(),
+    queries(activePkg).popSummary.execute()
   ]));
 
   return (
