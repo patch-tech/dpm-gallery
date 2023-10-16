@@ -9,4 +9,4 @@ While most of the programs are runnable out of the box, you will be able to do m
 
 ## Gallery Index
 
-- Customer Dataset Access Over Snowflake
+- [Customer Dataset Access Over Snowflake](https://github.com/patch-tech/dpm-gallery/tree/main/engagement-dashboard-snowflake)
