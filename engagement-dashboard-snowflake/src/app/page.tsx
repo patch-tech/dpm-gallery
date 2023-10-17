@@ -7,32 +7,43 @@ import { FactsAppEngagement as DataPkg } from "snowflake-demo-package-fast";
 
 const queries = (pkg: any) => {
 
-  const { gender, age, ethnicity, devicemakemodel, appTitle, foregroundduration, panelistid, starttimestamp, isp } = pkg.fields;
+  const { gender, age, ethnicity, devicemakemodel, 
+          appTitle, foregroundduration, panelistid, 
+          starttimestamp, isp } = pkg.fields;
 
   return {
     sessionDuration: pkg.select(
       starttimestamp.day.as('dayOfWeek'),
       foregroundduration.avg().as('avgSessionLength'))
-      .filter(appTitle.eq('ESPN')),
+      .filter(appTitle.eq('ESPN'))
+      .limit(7),
     appSplit: pkg.select(
       appTitle,
       panelistid.count().as('appCount'))
-      .filter(appTitle.isNotNull()),
+      .filter(appTitle.isNotNull())
+      .orderBy(["appCount", "desc"])
+      .limit(10),
     deviceSplit: pkg.select(
       devicemakemodel,
       panelistid.count().as('deviceCount'))
-      .filter(devicemakemodel.isNotNull()),
+      .filter(devicemakemodel.isNotNull())
+      .orderBy(["deviceCount", "desc"])
+      .limit(10),
     ispSplit: pkg.select(
       isp,
       panelistid.count().as('ispCount'))
-      .filter(isp.isNotNull()),
+      .filter(isp.isNotNull())
+      .orderBy(["ispCount","desc"])
+      .limit(10),
     topSessions: pkg.select(
       panelistid,
       devicemakemodel,
       appTitle,
       foregroundduration)
-    .filter(devicemakemodel.isNotNull().and(appTitle.isNotNull()))
-    .orderBy([foregroundduration, 'DESC']),
+    .filter(devicemakemodel.isNotNull()
+            .and(appTitle.isNotNull()))
+    .orderBy([foregroundduration, 'DESC'])
+    .limit(50),
     popSummary: pkg.select(
       appTitle,
       devicemakemodel,
@@ -54,18 +65,16 @@ export default async function Home() {
     popData,
     durationData
   ] = await (Promise.all([
-    queries(activePkg).appSplit.limit(10).orderBy(["appCount", "desc"]).execute(),
-    queries(activePkg).deviceSplit.limit(10).orderBy(["deviceCount", "desc"]).execute(),
-    queries(activePkg).ispSplit.limit(10).orderBy(["ispCount","desc"]).execute(),
-    queries(activePkg).topSessions.limit(50).execute(),
+    queries(activePkg).appSplit.execute(),
+    queries(activePkg).deviceSplit.execute(),
+    queries(activePkg).ispSplit.execute(),
+    queries(activePkg).topSessions.execute(),
     queries(activePkg).popSummary.execute(),
-    queries(activePkg).sessionDuration.limit(7).execute().then((data) => {
-      // let newData = new Object
+    queries(activePkg).sessionDuration.execute().then((data: any[]) => {
       data.forEach(element => {
         element.avgSessionLength = parseInt(element.avgSessionLength) / 1000;
         element.dayOfWeek = element.dayOfWeek - 1;    
       });
-      console.log(data);
       return data; 
     })
   ]));
