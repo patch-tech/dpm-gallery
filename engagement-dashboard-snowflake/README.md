@@ -13,7 +13,7 @@ The stack includes:
 Prerequisites:
 1. Ensure you have a Patch account - https://cloud.dpm.sh/login. 
 2. Install the Patch `dpm` CLI utility - https://github.com/patch-tech/dpm#installation.
-3. Log into the `dpm` CLI by running `dpm login` and follow the prompts. This will save credentials on your file system that will used to authorize queries.
+3. Log into the `dpm` CLI by running `dpm login` and follow the prompts. This will save credentials on your file system that will be used to authorize queries.
 
 Then, to run the app locally:
 1. Clone this repo.
