@@ -18,8 +18,9 @@ export default async function Home({
       sessionDuration: pkg.select(
         starttimestamp.day.as('dayOfWeek'),
         foregroundduration.avg().as('avgSessionLength'))
-        .filter(appTitle.like(appName))
-        .limit(7),
+        .filter(appTitle.like(appName).and(starttimestamp.day.gt(1)))
+        //.limit(7)
+        ,
       appSplit: pkg.select(
         appTitle,
         panelistid.count().as('appCount'))
@@ -88,37 +89,39 @@ export default async function Home({
           <Tab>Overview</Tab>
           <Tab>Drilldowns</Tab>
         </TabList>
-            <Select>
-              <SelectItem value="ESPN">
-                <Link
-                  href={{
-                    pathname: '/',
-                    query:{ app: 'ESPN' }
-                  }}
-                >ESPN</Link></SelectItem>
-                <SelectItem value="Walmart">
-                <Link
-                  href={{
-                    pathname: '/',
-                    query:{ app: 'Walmart' }
-                  }}
-                >Walmart</Link></SelectItem>
-               <SelectItem value="TikTok">
-                <Link
-                  href={{
-                    pathname: '/',
-                    query:{ app: 'Tik Tok' }
-                  }}
-                >Tik Tok</Link></SelectItem>
-                 <SelectItem value="CashApp">
-                <Link
-                  href={{
-                    pathname: '/',
-                    query:{ app: 'Cash App' }
-                  }}
-                >Cash App</Link></SelectItem>
-            </Select>
-          
+            <Card>
+              <Text>Filter by app:</Text>
+              <Select>
+                <SelectItem value="ESPN">
+                  <Link
+                    href={{
+                      pathname: '/',
+                      query:{ app: 'ESPN' }
+                    }}
+                  >ESPN</Link></SelectItem>
+                  <SelectItem value="Walmart">
+                  <Link
+                    href={{
+                      pathname: '/',
+                      query:{ app: 'Walmart' }
+                    }}
+                  >Walmart</Link></SelectItem>
+                <SelectItem value="TikTok">
+                  <Link
+                    href={{
+                      pathname: '/',
+                      query:{ app: 'Tik Tok' }
+                    }}
+                  >Tik Tok</Link></SelectItem>
+                  <SelectItem value="CashApp">
+                  <Link
+                    href={{
+                      pathname: '/',
+                      query:{ app: 'Cash App' }
+                    }}
+                  >Cash App</Link></SelectItem>
+              </Select>
+            </Card>
         <TabPanels>
           <Card>
             <Title>Session Duration by Day of Week (seconds)</Title>
