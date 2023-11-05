@@ -1,59 +1,60 @@
 import {
   Col, Card,Grid, Title, Text, DonutChart, Tab, TabList, BarChart, LineChart,
-  TabGroup, TabPanel, TabPanels, Table, TableHead, TableHeaderCell, TableRow, TableCell, TableBody, ValueFormatter
+  TabGroup, TabPanel, TabPanels, Table, TableHead, TableHeaderCell, TableRow, TableCell, TableBody, ValueFormatter, Button, Select, SelectItem
 } from "@tremor/react";
-
+import Link from "next/link";
 import { FactsAppEngagement as DataPkg } from "snowflake-demo-package-fast";
 
-const queries = (pkg: any) => {
+export default async function Home({
+  searchParams: { app },
+}: {
+  searchParams: { app: string };
+}) {
+  const queries = (pkg: any) => {
 
-  const { gender, age, ethnicity, devicemakemodel, 
-          appTitle, foregroundduration, panelistid, 
-          starttimestamp, isp } = pkg.fields;
-
-  return {
-    sessionDuration: pkg.select(
-      starttimestamp.day.as('dayOfWeek'),
-      foregroundduration.avg().as('avgSessionLength'))
-      .filter(appTitle.eq('ESPN'))
-      .limit(7),
-    appSplit: pkg.select(
-      appTitle,
-      panelistid.count().as('appCount'))
-      .filter(appTitle.isNotNull())
-      .orderBy(["appCount", "desc"])
-      .limit(10),
-    deviceSplit: pkg.select(
-      devicemakemodel,
-      panelistid.count().as('deviceCount'))
-      .filter(devicemakemodel.isNotNull())
-      .orderBy(["deviceCount", "desc"])
-      .limit(10),
-    ispSplit: pkg.select(
-      isp,
-      panelistid.count().as('ispCount'))
-      .filter(isp.isNotNull())
-      .orderBy(["ispCount","desc"])
-      .limit(10),
-    topSessions: pkg.select(
-      panelistid,
-      devicemakemodel,
-      appTitle,
-      foregroundduration)
-    .filter(devicemakemodel.isNotNull()
-            .and(appTitle.isNotNull()))
-    .orderBy([foregroundduration, 'DESC'])
-    .limit(50),
-    popSummary: pkg.select(
-      appTitle,
-      devicemakemodel,
-      isp,
-      panelistid)
-    .limit(50)
+    const { devicemakemodel, appTitle, foregroundduration, panelistid, starttimestamp, isp } = pkg.fields;
+    const appName = app ? app.split('+')[0] : 'ESPN'; 
+    return {
+      sessionDuration: pkg.select(
+        starttimestamp.day.as('dayOfWeek'),
+        foregroundduration.avg().as('avgSessionLength'))
+        .filter(appTitle.like(appName).and(starttimestamp.day.gt(1)))
+        //.limit(7)
+        ,
+      appSplit: pkg.select(
+        appTitle,
+        panelistid.count().as('appCount'))
+        .filter(appTitle.eq(appName))
+        .orderBy(["appCount", "desc"])
+        .limit(10),
+      deviceSplit: pkg.select(
+        devicemakemodel,
+        panelistid.count().as('deviceCount'))
+        .filter(devicemakemodel.isNotNull().and(appTitle.eq(appName)))
+        .orderBy(["deviceCount", "desc"])
+        .limit(10),
+      ispSplit: pkg.select(
+        isp,
+        panelistid.count().as('ispCount'))
+        .filter(isp.isNotNull().and(appTitle.eq(appName)))
+        .orderBy(["ispCount","desc"])
+        .limit(10),
+      topSessions: pkg.select(
+        panelistid,
+        devicemakemodel,
+        appTitle,
+        foregroundduration)
+      .filter(devicemakemodel.isNotNull().and(appTitle.eq(appName)))
+      .orderBy([foregroundduration, 'DESC'])
+      .limit(50),
+      popSummary: pkg.select(
+        appTitle,
+        devicemakemodel,
+        isp,
+        panelistid)
+      .limit(50)
+    };
   };
-};
-
-export default async function Home() {
 
   const activePkg = DataPkg; 
 
@@ -83,13 +84,44 @@ export default async function Home() {
     <main className="p-12">
       <Title>Mobile App Engagement Summary</Title>
       <Text>Understanding how people use various mobile apps</Text>
-
       <TabGroup className="mt-6">
         <TabList>
           <Tab>Overview</Tab>
           <Tab>Drilldowns</Tab>
         </TabList>
-
+            <Card>
+              <Text>Filter by app:</Text>
+              <Select>
+                <SelectItem value="ESPN">
+                  <Link
+                    href={{
+                      pathname: '/',
+                      query:{ app: 'ESPN' }
+                    }}
+                  >ESPN</Link></SelectItem>
+                  <SelectItem value="Walmart">
+                  <Link
+                    href={{
+                      pathname: '/',
+                      query:{ app: 'Walmart' }
+                    }}
+                  >Walmart</Link></SelectItem>
+                <SelectItem value="TikTok">
+                  <Link
+                    href={{
+                      pathname: '/',
+                      query:{ app: 'Tik Tok' }
+                    }}
+                  >Tik Tok</Link></SelectItem>
+                  <SelectItem value="CashApp">
+                  <Link
+                    href={{
+                      pathname: '/',
+                      query:{ app: 'Cash App' }
+                    }}
+                  >Cash App</Link></SelectItem>
+              </Select>
+            </Card>
         <TabPanels>
           <Card>
             <Title>Session Duration by Day of Week (seconds)</Title>
