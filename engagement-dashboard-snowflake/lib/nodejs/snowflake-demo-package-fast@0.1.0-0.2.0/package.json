@@ -5,17 +5,17 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "prepublish": "tsc",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "tsc"
   },
   "devDependencies": {
     "typescript": "^5.0.4",
     "@types/node": "^18.16.1"
   },
   "dependencies": {
-    "@grpc/proto-loader": "^0.5.0",
     "graphql-request": "^6.0.0",
     "google-protobuf": "^3.0.0",
-    "@grpc/grpc-js": "^1.1.0"
+    "@grpc/grpc-js": "^1.1.0",
+    "@grpc/proto-loader": "^0.5.0"
   }
 }
