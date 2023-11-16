@@ -46,7 +46,7 @@ export class FactsAppEngagement {
 
     private constructor() {
       this.table_ = new Table({
-        packageId: "fa7905a7-b624-41f8-a06e-c72d86ae67f2",
+        packageId: "1481fe92-b193-4eac-b0de-f59e86a9e833",
         datasetName: "snowflake-demo-package-fast",
         datasetVersion: "0.1.0",
         name: "FACTS_APP_ENGAGEMENT",
