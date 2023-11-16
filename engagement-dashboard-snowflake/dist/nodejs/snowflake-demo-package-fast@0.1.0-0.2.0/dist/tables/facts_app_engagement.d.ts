@@ -1,0 +1,42 @@
+import { DateTimeField, Field, StringField } from "../field";
+import { FieldExpr } from "../field_expr";
+import { Table } from "../table";
+export declare class FactsAppEngagement {
+    static fields: {
+        panelistid: StringField;
+        age: Field<number>;
+        gender: StringField;
+        ethnicity: StringField;
+        factid: StringField;
+        devicemakemodel: StringField;
+        operator: StringField;
+        startmarket: StringField;
+        startinbuilding: StringField;
+        startzipcode: StringField;
+        starttimestamp: DateTimeField;
+        startlongitude: Field<number>;
+        startlatitude: Field<number>;
+        appname: StringField;
+        appTitle: StringField;
+        foregroundduration: Field<number>;
+        foregroundendtime: DateTimeField;
+        foregroundstarttime: DateTimeField;
+        screenofftime: DateTimeField;
+        screenonduration: Field<number>;
+        screenontime: DateTimeField;
+        visibleduration: Field<number>;
+        visibleendtime: DateTimeField;
+        visiblestarttime: DateTimeField;
+        isp: StringField;
+        startDataconntech: StringField;
+        year: Field<number>;
+        month: Field<number>;
+        day: Field<number>;
+    };
+    private table_;
+    private static instance;
+    private constructor();
+    private static get;
+    static table(): Table;
+    static select(...selection: ("PANELISTID" | "AGE" | "GENDER" | "ETHNICITY" | "FACTID" | "DEVICEMAKEMODEL" | "OPERATOR" | "STARTMARKET" | "STARTINBUILDING" | "STARTZIPCODE" | "STARTTIMESTAMP" | "STARTLONGITUDE" | "STARTLATITUDE" | "APPNAME" | "APP_TITLE" | "FOREGROUNDDURATION" | "FOREGROUNDENDTIME" | "FOREGROUNDSTARTTIME" | "SCREENOFFTIME" | "SCREENONDURATION" | "SCREENONTIME" | "VISIBLEDURATION" | "VISIBLEENDTIME" | "VISIBLESTARTTIME" | "ISP" | "START_DATACONNTECH" | "YEAR" | "MONTH" | "DAY" | FieldExpr)[]): Table;
+}
