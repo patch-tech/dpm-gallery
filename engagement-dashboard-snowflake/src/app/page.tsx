@@ -12,7 +12,7 @@ export default async function Home({
 }) {
   const queries = (pkg: any) => {
 
-    const { devicemakemodel, appTitle, foregroundduration, panelistid, starttimestamp, isp } = pkg.fields;
+    const { devicemakemodel, appTitle, foregroundduration, panelistid, starttimestamp, isp, startmarket } = pkg.fields;
     const appName = app ? app.split('+')[0] : 'ESPN'; 
     return {
       sessionDuration: pkg.select(
@@ -21,11 +21,11 @@ export default async function Home({
         .filter(appTitle.like(appName).and(starttimestamp.day.gt(1)))
         //.limit(7)
         ,
-      appSplit: pkg.select(
-        appTitle,
-        panelistid.count().as('appCount'))
+      locationSplit: pkg.select(
+        startmarket,
+        panelistid.count().as('locationCount'))
         .filter(appTitle.eq(appName))
-        .orderBy(["appCount", "desc"])
+        .orderBy(["locationCount", "desc"])
         .limit(10),
       deviceSplit: pkg.select(
         devicemakemodel,
@@ -59,14 +59,14 @@ export default async function Home({
   const activePkg = DataPkg; 
 
   const [
-    appData,
+    locationData,
     deviceData,
     ispData,
     sessionData,
     popData,
     durationData
   ] = await (Promise.all([
-    queries(activePkg).appSplit.execute(),
+    queries(activePkg).locationSplit.execute(),
     queries(activePkg).deviceSplit.execute(),
     queries(activePkg).ispSplit.execute(),
     queries(activePkg).topSessions.execute(),
@@ -92,34 +92,38 @@ export default async function Home({
             <Card>
               <Text>Filter by app:</Text>
               <Select>
-                <SelectItem value="ESPN">
                   <Link
                     href={{
                       pathname: '/',
                       query:{ app: 'ESPN' }
                     }}
-                  >ESPN</Link></SelectItem>
-                  <SelectItem value="Walmart">
+                  >
+                    <SelectItem value="ESPN">ESPN</SelectItem>
+                  </Link>
                   <Link
                     href={{
                       pathname: '/',
                       query:{ app: 'Walmart' }
                     }}
-                  >Walmart</Link></SelectItem>
-                <SelectItem value="TikTok">
+                  >
+                    <SelectItem value="Walmart">Walmart</SelectItem>
+                  </Link>
                   <Link
                     href={{
                       pathname: '/',
                       query:{ app: 'Tik Tok' }
                     }}
-                  >Tik Tok</Link></SelectItem>
-                  <SelectItem value="CashApp">
+                  >
+                    <SelectItem value="TikTok">Tik Tok</SelectItem>
+                  </Link>
                   <Link
                     href={{
                       pathname: '/',
                       query:{ app: 'Cash App' }
                     }}
-                  >Cash App</Link></SelectItem>
+                  >
+                    <SelectItem value="CashApp">Cash App</SelectItem>
+                    </Link>
               </Select>
             </Card>
         <TabPanels>
@@ -135,17 +139,14 @@ export default async function Home({
               />
           </Card>
           
-
           <Grid numItems={3} className="mt-6 gap-6">
             <Card>
-              <Title>App Breakdown</Title>
+              <Title>Location Breakdown</Title>
               <DonutChart
                 className="mt-6"
-                data={appData}
-                category="appCount"
-                index="appTitle"
-                // colors={["rose", "violet"]}
-
+                data={locationData}
+                category="locationCount"
+                index="startmarket"
               />
             </Card>
 
@@ -156,7 +157,6 @@ export default async function Home({
                 data={deviceData}
                 category="deviceCount"
                 index="devicemakemodel"
-                // colors={["rose", "violet", "slate", "indigo", "cyan", "amber"]}
               />
             </Card>
 

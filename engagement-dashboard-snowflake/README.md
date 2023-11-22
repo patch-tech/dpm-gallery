@@ -17,6 +17,6 @@ Prerequisites:
 
 Then, to run the app locally:
 1. Clone this repo.
-2. In the `dpm-gallery` directory, run `npm install`.
+2. In the ` engagement-dashboard-snowflake` directory, run `npm install`.
 3. Run `npm run dev`.
 4. Open `http://localhost:3000/` in your browser.
